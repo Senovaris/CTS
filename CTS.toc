@@ -1,0 +1,15 @@
+## Interface: 120001, 120000
+## Title: |cffFF6B01CTS|r
+## Notes: Combat Timer and Status
+## Author: Aurs
+## Category: Aurs UI [DEV]
+## Version: 0.7
+## SavedVariables: timerDB, statusDB
+## IconTexture: Interface\Addons\CTS\Media\logo.png
+
+# Libs
+libs\LibStub\LibStub.lua
+libs\LibEditMode\embed.xml
+
+CombatTimer.lua
+CombatStatus.lua
