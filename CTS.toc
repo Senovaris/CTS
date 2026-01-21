@@ -2,8 +2,8 @@
 ## Title: |cffFF6B01CTS|r
 ## Notes: Combat Timer and Status
 ## Author: Aurs
-## Category: Aurs UI [DEV]
-## Version: 0.7
+## Category: Aurs UI
+## Version: 1.0
 ## SavedVariables: timerDB, statusDB
 ## IconTexture: Interface\Addons\CTS\Media\logo.png
 
