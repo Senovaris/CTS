@@ -98,32 +98,30 @@ timer:SetScript("OnEvent", function(self, event)
           timerDB.layouts[layoutName].point or "CENTER", 
           timerDB.layouts[layoutName].x or 0,
           timerDB.layouts[layoutName].y or 0)
-      end)
-      LEM:AddFrame(timer, onPositionChanged, defaultPosition)
+        end)
+        LEM:AddFrame(timer, onPositionChanged, defaultPosition)
+      end
+
+    elseif event == "PLAYER_REGEN_DISABLED" then
+      combatStartTime = GetTime()
+      timerText:Show()
+      timer:SetBackdropColor(0, 0, 0, 0)
+      timer:SetBackdropBorderColor(0, 0, 0, 0)
+
+    elseif event == "PLAYER_REGEN_ENABLED" then
+      combatStartTime = nil
+      timerText:Hide()
+      if not timerDB.locked then
+        timer:SetBackdropColor(0.05, 0.05, 0.08, 0.95)
+        timer:SetBackdropBorderColor(0.73, 0.60, 0.97, 1)
+      end
     end
-
-  elseif event == "PLAYER_REGEN_DISABLED" then
-    combatStartTime = GetTime()
-    timerText:Show()
-    timer:SetBackdropColor(0, 0, 0, 0)
-    timer:SetBackdropBorderColor(0, 0, 0, 0)
-
-  elseif event == "PLAYER_REGEN_ENABLED" then
-    combatStartTime = nil
-    timerText:Hide()
-    if not timerDB.locked then
-      timer:SetBackdropColor(0.05, 0.05, 0.08, 0.95)
-      timer:SetBackdropBorderColor(0.73, 0.60, 0.97, 1)
+  end)
+  timer:SetScript("OnUpdate", function (self, elapsed)
+    if combatStartTime then
+      local elapsedTime = GetTime() - combatStartTime
+      local minutes = math.floor(elapsedTime / 60)
+      local seconds = math.floor(elapsedTime % 60)
+      timerText:SetText(string.format("[%d:%02d]", minutes, seconds))
     end
-  end
-end)
-timer:SetScript("OnUpdate", function (self, elapsed)
-  if combatStartTime then
-    local elapsedTime = GetTime() - combatStartTime
-    local minutes = math.floor(elapsedTime / 60)
-    local seconds = math.floor(elapsedTime % 60)
-    timerText:SetText(string.format("[%d:%02d]", minutes, seconds))
-  end
-end)
-
-print("Combat timer loaded")
+  end)

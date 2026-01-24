@@ -104,30 +104,28 @@ status:SetScript("OnEvent", function(self, event)
           statusDB.layouts[layoutName].point or "CENTER",
           statusDB.layouts[layoutName].x or 0,
           statusDB.layouts[layoutName].y or 0)
+        end)
+        LEM:AddFrame(status, onPositionChanged, defaultPosition)
+      end
+
+    elseif event == "PLAYER_REGEN_DISABLED" then
+      if inCombatTimer then
+        inCombatTimer:Cancel()
+      end
+      inCombatText:Show()
+
+      inCombatTimer = C_Timer.NewTimer(2, function()
+        inCombatText:Hide()
       end)
-      LEM:AddFrame(status, onPositionChanged, defaultPosition)
+
+    elseif event == "PLAYER_REGEN_ENABLED" then
+      if outCombatTimer then
+        outCombatTimer:Cancel()
+      end
+      outCombatText:Show()
+
+      outCombatTimer = C_Timer.NewTimer(2, function()
+        outCombatText:Hide()
+      end)
     end
-
-  elseif event == "PLAYER_REGEN_DISABLED" then
-    if inCombatTimer then
-      inCombatTimer:Cancel()
-    end
-    inCombatText:Show()
-
-    inCombatTimer = C_Timer.NewTimer(2, function()
-      inCombatText:Hide()
-    end)
-
-  elseif event == "PLAYER_REGEN_ENABLED" then
-    if outCombatTimer then
-      outCombatTimer:Cancel()
-    end
-    outCombatText:Show()
-
-    outCombatTimer = C_Timer.NewTimer(2, function()
-      outCombatText:Hide()
-    end)
-  end
-end)
-
-print("|cff9B77F7[Combat Status]|r Loaded!")
+  end)
