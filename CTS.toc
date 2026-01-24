@@ -1,9 +1,9 @@
 ## Interface: 120001, 120000
-## Title: |cffFF6B01CTS|r
+## Title: |cff00FFFFCTS|r
 ## Notes: Combat Timer and Status
 ## Author: Aurs
 ## Category: Aurs UI
-## Version: 1.0
+## Version: 1.1
 ## SavedVariables: timerDB, statusDB
 ## IconTexture: Interface\Addons\CTS\Media\logo.png
 
