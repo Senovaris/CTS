@@ -3,7 +3,7 @@
 ## Notes: Combat Timer and Status
 ## Author: Aurs
 ## Category: Aurs UI
-## Version: 1.1
+## Version: 1.2
 ## SavedVariables: timerDB, statusDB
 ## IconTexture: Interface\AddOns\CTS\Media\logo.png
 
