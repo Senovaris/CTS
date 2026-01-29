@@ -1,13 +1,15 @@
 statusDB = statusDB or {
+  enabled = true,
   x = 0,
   y = 0,
-  combatStatusLocked = true
+  combatStatusLocked = true,
+  font = "Fonts\\FRIZQT__.TTF",
+  size = 14
 }
 
-local inCombatText
-local outCombatText
+CTS = CTS or {}
 
-local status = CreateFrame("Frame", "CombatStatus", UIParent, "BackdropTemplate")
+status = CreateFrame("Frame", "CombatStatus", UIParent, "BackdropTemplate")
 status:SetSize(200, 80)
 status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
 
@@ -42,7 +44,8 @@ status:SetBackdrop({
 status:SetBackdropColor(0, 0, 0, 0)
 status:SetBackdropBorderColor(0, 0, 0, 0)
 
-inCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+local inCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+CTS.inCombatText = inCombatText
 inCombatText:SetPoint("CENTER", status, "CENTER", 0, 10)
 local font, size = inCombatText:GetFont()
 inCombatText:SetFont(font, size, "OUTLINE, THIN")
@@ -50,13 +53,24 @@ inCombatText:SetText("In Combat")
 inCombatText:SetTextColor(1, 0, 0, 1)
 inCombatText:Hide()
 
-outCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+local outCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+CTS.outCombatText = outCombatText
 outCombatText:SetPoint("CENTER", status, "CENTER", 0, -10)
 local font2, size2 = outCombatText:GetFont()
 outCombatText:SetFont(font2, size2, "OUTLINE, THIN")
 outCombatText:SetText("Out of Combat")
 outCombatText:SetTextColor(0, 1, 0, 1)
 outCombatText:Hide()
+
+function CTS_UpdateStatusFont()
+  local sp = statusDB.size * 1.1
+  inCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
+  outCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
+  inCombatText:ClearAllPoints()
+  inCombatText:SetPoint("CENTER", status, "CENTER", 0, sp / 2)
+  outCombatText:ClearAllPoints()
+  outCombatText:SetPoint("CENTER", status, "CENTER", 0, -sp / 2)
+end
 
 status:RegisterEvent("PLAYER_REGEN_DISABLED")
 status:RegisterEvent("PLAYER_REGEN_ENABLED")

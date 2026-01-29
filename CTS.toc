@@ -1,11 +1,13 @@
 ## Interface: 120001, 120000
-## Title: |cff00FFFFCTS|r
+## Title: |cff00d9ffCTS|r
 ## Notes: Combat Timer and Status
 ## Author: Aurs
 ## Category: Aurs UI
 ## Version: 1.1
 ## SavedVariables: timerDB, statusDB
-## IconTexture: Interface\Addons\CTS\Media\logo.png
+## IconTexture: Interface\AddOns\CTS\Media\logo.png
+
+## X-Font-Files: Interface\AddOns\CTS\Media\Fonts\Expressway.ttf, Interface\AddOns\CTS\Media\Fonts\Monas.ttf, Interface\AddOns\CTS\Media\Fonts\Accidental_Presidency.ttf, Interface\AddOns\CTS\Media\Fonts\ActionMan.ttf, Interface\AddOns\CTS\Media\Fonts\ContinuumMedium.ttf, Interface\AddOns\CTS\Media\Fonts\DieDieDie.ttf, Interface\AddOns\CTS\Media\Fonts\Homespun.ttf, Interface\AddOns\CTS\Media\Fonts\PTSansNarrow.ttf
 
 # Libs
 libs\LibStub\LibStub.lua
@@ -13,3 +15,4 @@ libs\LibEditMode\embed.xml
 
 CombatTimer.lua
 CombatStatus.lua
+Options.lua

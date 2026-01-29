@@ -1,10 +1,13 @@
 timerDB = timerDB or {
+  enabled = true,
   x = 0,
   y = -55,
-  locked = true
+  locked = true,
+  font = "Fonts\\FRIZQT__.TTF",
+  size = 14
 }
 
-local timer = CreateFrame("Frame", "CombatTimer", UIParent, "BackdropTemplate")
+timer = CreateFrame("Frame", "CombatTimer", UIParent, "BackdropTemplate")
 timer:SetSize(100, 20)
 timer:SetPoint("CENTER", UIParent, "CENTER", timerDB.x, timerDB.y)
 
@@ -45,13 +48,17 @@ timer:SetBackdropBorderColor(0, 0, 0, 0)
 
 
 
-local timerText = timer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+timerText = timer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 timerText:SetPoint("CENTER", timer, "CENTER", 0, 0)
 local font, size = timerText:GetFont()
-timerText:SetFont(font, size, "OUTLINE, THIN")
+timerText:SetFont(timerDB.font, timerDB.size, "OUTLINE, THIN")
 timerText:SetText("[0.00]")
 timerText:SetTextColor(1, 1, 1, 1) -- White
 timerText:Hide()
+
+function CTS_UpdateTimerFont()
+  timerText:SetFont(timerDB.font, timerDB.size, "OUTLINE, THIN")
+end
 
 timer:RegisterEvent("PLAYER_REGEN_DISABLED")
 timer:RegisterEvent("PLAYER_REGEN_ENABLED")
