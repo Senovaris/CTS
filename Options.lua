@@ -236,13 +236,7 @@ tFD:SetScript("OnShow", function(self)
 end)
 
 -- Add the things to the things [Tab 2] --
-cSS = CreateSlider(tabs[2].content, "Combat Status Size", -140, 8, 60,
-function() return statusDB.size end,
-function(val) statusDB.size = val
-  if CTS_UpdateStatusFont then
-    CTS_UpdateStatusFont()
-  end
-end)
+
 
 eCS = CreateCheckbox(tabs[2].content,"Enable Combat Status", -10,
 function() return statusDB.enabled end,
@@ -255,7 +249,14 @@ function(val)
   end
 end)
 
-sFD = CreateDropdown(tabs[2].content, "Timer Font", -70, fO,
+tFT = CreateCheckbox(tabs[2].content, "Toggle Fade Animation", -40,
+function() return statusDB.fadeToggle end,
+function(val)
+  statusDB.fadeToggle = val
+  fadeToggle = val
+end)
+
+sFD = CreateDropdown(tabs[2].content, "Timer Font", -110, fO,
 function() return statusDB.font or "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf" end,
 function(val)
   statusDB.font = val
@@ -274,6 +275,14 @@ sFD:SetScript("OnShow", function(self)
   end
 end)
 
+cSS = CreateSlider(tabs[2].content, "Combat Status Size", -170, 8, 60,
+function() return statusDB.size end,
+function(val) statusDB.size = val
+  if CTS_UpdateStatusFont then
+    CTS_UpdateStatusFont()
+  end
+end)
+
 CreateButton(tabs[1].content, "TimerShow", -12, function()
   if timerText:IsShown() then
     timerText:Hide()
@@ -283,13 +292,19 @@ CreateButton(tabs[1].content, "TimerShow", -12, function()
   end
 end)
 
+local showStatusText = false
 CreateButton(tabs[2].content, "StatusShow", -12, function()
-  if CTS.inCombatText:IsShown() and CTS.outCombatText:IsShown() then
+  status:SetScript("OnUpdate", nil)
+  if showStatusText == false then
+    CTS.inCombatText:Show()
+    CTS.inCombatText:SetAlpha(1)
+    CTS.outCombatText:Show()
+    CTS.outCombatText:SetAlpha(1)
+    showStatusText = true
+  else
     CTS.inCombatText:Hide()
     CTS.outCombatText:Hide()
-  else
-    CTS.inCombatText:Show()
-    CTS.outCombatText:Show()
+    showStatusText = false
   end
 end)
 
@@ -307,6 +322,7 @@ cts:SetScript("OnShow", function()
   eCS:SetChecked(statusDB.enabled)
   cSS:SetValue(statusDB.size)
   tSS:SetValue(timerDB.size)
+  tFT:SetChecked(statusDB.fadeToggle)
 end)
 
 C_Timer.After(1, function()

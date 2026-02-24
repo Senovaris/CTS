@@ -7,7 +7,8 @@ statusDB = statusDB or {
   y = 0,
   combatStatusLocked = true,
   font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
-  size = 14
+  size = 14,
+  fadeToggle = true
 }
 
 CTS = CTS or {}
@@ -70,6 +71,7 @@ function CTS_UpdateStatusFont()
   inCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
   outCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
   inCombatText:ClearAllPoints()
+
   inCombatText:SetPoint("CENTER", status, "CENTER", 0, sp / 2)
   outCombatText:ClearAllPoints()
   outCombatText:SetPoint("CENTER", status, "CENTER", 0, -sp / 2)
@@ -81,6 +83,7 @@ status:RegisterEvent("PLAYER_LOGIN")
 
 local inCombatTimer
 local outCombatTimer
+fadeToggle = true
 
 status:SetScript("OnEvent", function(self, event)
   if event == "PLAYER_LOGIN" then
@@ -90,8 +93,11 @@ status:SetScript("OnEvent", function(self, event)
       y = 0,
       combatStatusLocked = true,
       font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
-      size = 14
+      size = 14,
+      fadeToggle = true
     }
+
+    fadeToggle = statusDB.fadeToggle -- Makes the FadeToggle persist
 
     status:ClearAllPoints()
     status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
@@ -129,7 +135,7 @@ status:SetScript("OnEvent", function(self, event)
         status:ClearAllPoints()
         status:SetPoint(
           statusDB.layouts[layoutName].point or "CENTER",
-          UIParent, 
+          UIParent,
           statusDB.layouts[layoutName].point or "CENTER",
           statusDB.layouts[layoutName].x or 0,
           statusDB.layouts[layoutName].y or 0)
@@ -138,24 +144,34 @@ status:SetScript("OnEvent", function(self, event)
       end
 
     elseif event == "PLAYER_REGEN_DISABLED" then
-      if inCombatTimer then
-        inCombatTimer:Cancel()
-      end
-      inCombatText:Show()
-
-      inCombatTimer = C_Timer.NewTimer(2, function()
-        inCombatText:Hide()
-      end)
-
-    elseif event == "PLAYER_REGEN_ENABLED" then
-      if outCombatTimer then
-        outCombatTimer:Cancel()
-      end
-      outCombatText:Show()
-
-      outCombatTimer = C_Timer.NewTimer(2, function()
+      if fadeToggle == true then
         outCombatText:Hide()
-      end)
+        fade(inCombatText)
+      else
+        outCombatText:Hide()
+        inCombatText:SetAlpha(1)
+        if inCombatTimer then
+          inCombatTimer:Cancel()
+        end
+        inCombatText:Show()
+        inCombatTimer = C_Timer.NewTimer(3, function()
+          inCombatText:Hide()
+        end)
+      end
+    elseif event == "PLAYER_REGEN_ENABLED" then
+      if fadeToggle == true then
+        inCombatText:Hide()
+        fade(outCombatText)
+      else
+        inCombatText:Hide()
+        outCombatText:SetAlpha(1)
+        if outCombatTimer then
+          outCombatTimer:Cancel()
+        end
+        outCombatText:Show()
+        outCombatTimer = C_Timer.NewTimer(3, function()
+          outCombatText:Hide()
+        end)
+      end
     end
   end)
-
