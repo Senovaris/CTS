@@ -9,7 +9,7 @@ end })
 namespace.L = L
 
 local LOCALE = GetLocale()
--- local LOCALE = "zhTW"          -- force locale for testing
+-- local LOCALE = "koKR"          -- force locale for testing
 
 if LOCALE == "enUS" then
   -- English is the default, no translations needed
@@ -43,14 +43,17 @@ if LOCALE == "enUS" then
             if LOCALE == "koKR" then
               L["In Combat"]      = "전투 시작"
               L["Out of Combat"]  = "전투 종료"
+              namespace.localeFont = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansKR-Regular.ttf"
               return end
 
               if LOCALE == "zhCN" then
                 L["In Combat"]      = "战斗中"
                 L["Out of Combat"]  = "非战斗状态"
+                namespace.localeFont = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansSC-Regular.ttf"
                 return end
 
                 if LOCALE == "zhTW" then
                   L["In Combat"]      = "戰鬥中"
                   L["Out of Combat"]  = "非戰鬥狀態"
+                  namespace.localeFont = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansTC-Regular.ttf"
                   return end

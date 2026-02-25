@@ -1,5 +1,6 @@
 local ADDON_NAME, namespace = ...
 local L = namespace.L
+local K = namespace.localeFont
 
 statusDB = statusDB or {
   enabled = true,
@@ -67,11 +68,11 @@ outCombatText:SetTextColor(0, 1, 0, 1)
 outCombatText:Hide()
 
 function CTS_UpdateStatusFont()
+  local fTU = K or statusDB.font
   local sp = statusDB.size * 1.1
-  inCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
-  outCombatText:SetFont(statusDB.font, statusDB.size, "OUTLINE, THIN")
+  inCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
+  outCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
   inCombatText:ClearAllPoints()
-
   inCombatText:SetPoint("CENTER", status, "CENTER", 0, sp / 2)
   outCombatText:ClearAllPoints()
   outCombatText:SetPoint("CENTER", status, "CENTER", 0, -sp / 2)

@@ -1,4 +1,6 @@
+local ADDON_NAME, namespace = ...
 local ADDON_NAME = "CTS"
+local kFTS = namespace.localeFont
 
 local cts = CreateFrame("Frame", "CTSPanel", UIParent, "BackdropTemplate")
 cts:SetSize(320, 320)
@@ -190,11 +192,12 @@ local fO = {
   {name = "Die Die Die", value = "Interface\\AddOns\\CTS\\Media\\fonts\\DieDieDie.ttf"},
   {name = "Homespun", value = "Interface\\AddOns\\CTS\\Media\\fonts\\Homespun.ttf"},
   {name = "PT Sans Narrow", value = "Interface\\AddOns\\CTS\\Media\\fonts\\PTSansNarrow.ttf"},
-  {name = "Noto Sans Korean", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansKR-Regular.ttf"},
-  {name = "Noto Sans Simplified Chinese", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansSC-Regular.ttf"},
-  {name = "Noto Sans Traditional Chinese", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansTC-Regular.ttf"}
 }
-
+if namespace.localeFont then
+  table.insert(fO, {name = "Noto Sans Korean", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansKR-Regular.ttf"})
+  table.insert(fO, {name = "Noto Sans Simplified Chinese", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansSC-Regular.ttf"})
+  table.insert(fO,{name = "Noto Sans Traditional Chinese", value = "Interface\\AddOns\\CTS\\Media\\fonts\\NotoSansTC-Regular.ttf"})
+end
 
 -- Add the things to the things [Tab 1] --
 tSS = CreateSlider(tabs[1].content, "Timer Font Size", -140, 8, 60,
@@ -266,7 +269,7 @@ function(val)
 end)
 
 sFD:SetScript("OnShow", function(self)
-  local sF = statusDB.font or "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf"
+  local sF = kFTS or statusDB.font or "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf"
   for i, option in ipairs(fO) do
     if option.value == sF then
       UIDropDownMenu_SetText(self, option.name)
@@ -274,6 +277,9 @@ sFD:SetScript("OnShow", function(self)
     end
   end
 end)
+if kFTS then
+  UIDropDownMenu_DisableDropDown(sFD)
+end
 
 cSS = CreateSlider(tabs[2].content, "Combat Status Size", -170, 8, 60,
 function() return statusDB.size end,
