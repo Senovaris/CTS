@@ -116,7 +116,6 @@ local function CreateSlider(parent, label, yOffset, min, max, getValue, setValue
     value = math.floor(value)
     valueText:SetText(value)
     setValue(value)
-    UpdateDisplay(true)
   end)
 
   return slider
