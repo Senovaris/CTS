@@ -1,11 +1,10 @@
-## Interface: 120001
+## Interface: 120005, 120001
 ## Title: |cff00d9ffCTS|r
 ## Notes: Combat Timer and Status
 ## Author: Aurs
 ## Category: Aurs UI
-## Version: 1.6
+## Version: @project-version@
 ## SavedVariables: timerDB, statusDB
-## SavedVariablesPerCharacter: timerDB, statusDB
 ## IconTexture: Interface\AddOns\CTS\Media\logo.png
 
 ## X-Curse-Project-ID: 1439839
