@@ -17,26 +17,6 @@ CTS = CTS or {}
 status = CreateFrame("Frame", "CombatStatus", UIParent, "BackdropTemplate")
 status:SetSize(200, 80)
 status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
-
--- Make draggable
-status:SetMovable(true)
-status:EnableMouse(false)
-status:RegisterForDrag("LeftButton")
-status:SetClampedToScreen(true)
-
-status:SetScript("OnDragStart", function(self)
-  if not statusDB.combatStatusLocked then
-    self:StartMoving()
-  end
-end)
-
-status:SetScript("OnDragStop", function(self)
-  self:StopMovingOrSizing()
-  local _, _, _, x, y = self:GetPoint()
-  statusDB.x = x
-  statusDB.y = y
-end)
-
 -- Backdrop setup
 status:SetBackdrop({
   bgFile = "Interface/Tooltips/UI-Tooltip-Background",

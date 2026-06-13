@@ -26,7 +26,6 @@ cts:Hide()
 local title = cts:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 title:SetPoint("TOP", 0, -10)
 title:SetText("|cff00d9ff" .. ADDON_NAME .. " Options|r")
-title:SetTextColor(1, 1, 1, 1)
 
 local editModeButton = CreateFrame("Button", nil, cts, "UIPanelButtonTemplate")
 editModeButton:SetPoint("TOP", -110, -7)
@@ -56,7 +55,7 @@ local function CreateTabButton(parent, index, name, xOffset)
 
   tab:SetScript("OnClick", function()
     activeTab = index
-    UpdateTabs()
+    ctsUpdateTabs()
   end)
 
   return tab
@@ -79,7 +78,7 @@ tabs[2] = {
   content = CreateTabContent(cts)
 }
 
-function UpdateTabs()
+function ctsUpdateTabs()
   for i, tab in ipairs(tabs) do
     if i == activeTab then
       tab.button:GetFontString():SetTextColor(1, 0.82, 0, 1)
@@ -91,7 +90,7 @@ function UpdateTabs()
   end
 end
 
-UpdateTabs()
+ctsUpdateTabs()
 
 
 -- Make the slider --
