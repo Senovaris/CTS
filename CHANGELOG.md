@@ -1,3 +1,8 @@
+### [1.9.4] - 2026-06-27
+
+### Changed
+- Reworked Options panel and cleaned up code.
+
 ### [1.9.3] - 2026-06-13
 
 ### Added

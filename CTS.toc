@@ -16,6 +16,7 @@
 libs\LibStub\LibStub.lua
 libs\LibEditMode\embed.xml
 
+Theme.lua
 Localization.lua
 Fade.lua
 PreloadFonts.lua
