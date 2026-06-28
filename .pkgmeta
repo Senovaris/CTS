@@ -5,3 +5,12 @@ tag: 1.0
 libs/LibEditMode:
 url: https://github.com/p3lim-wow/LibEditMode
 tag: latest
+
+changelog-title: Changelog
+changelog-file: CHANGELOG.md
+
+ignore:
+- .github
+- .gitignore
+- CHANGELOG.md
+- README.md
