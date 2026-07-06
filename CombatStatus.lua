@@ -2,15 +2,17 @@ local ADDON_NAME, namespace = ...
 local L = namespace.L
 local K = namespace.localeFont
 
-statusDB = statusDB or {
-  enabled = true,
-  x = 0,
-  y = 0,
-  combatStatusLocked = true,
-  font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
-  size = 14,
-  fadeToggle = true
-}
+statusDB = statusDB
+	or {
+		enabled = true,
+		x = 0,
+		y = 0,
+		combatStatusLocked = true,
+		font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
+		size = 14,
+		fadeToggle = true,
+		oocOnly = false,
+	}
 
 CTS = CTS or {}
 
@@ -19,12 +21,12 @@ status:SetSize(200, 80)
 status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
 -- Backdrop setup
 status:SetBackdrop({
-  bgFile = "Interface/Tooltips/UI-Tooltip-Background",
-  edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-  tile = true,
-  tileSize = 16,
-  edgeSize = 16,
-  insets = { left = 2, right = 2, top = 2, bottom = 2 }
+	bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+	edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+	tile = true,
+	tileSize = 16,
+	edgeSize = 16,
+	insets = { left = 2, right = 2, top = 2, bottom = 2 },
 })
 status:SetBackdropColor(0, 0, 0, 0)
 status:SetBackdropBorderColor(0, 0, 0, 0)
@@ -48,14 +50,14 @@ outCombatText:SetTextColor(0, 1, 0, 1)
 outCombatText:Hide()
 
 function CTS_UpdateStatusFont()
-  local fTU = K or statusDB.font
-  local sp = statusDB.size * 1.1
-  inCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
-  outCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
-  inCombatText:ClearAllPoints()
-  inCombatText:SetPoint("CENTER", status, "CENTER", 0, sp / 2)
-  outCombatText:ClearAllPoints()
-  outCombatText:SetPoint("CENTER", status, "CENTER", 0, -sp / 2)
+	local fTU = K or statusDB.font
+	local sp = statusDB.size * 1.1
+	inCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
+	outCombatText:SetFont(fTU, statusDB.size, "OUTLINE, THIN")
+	inCombatText:ClearAllPoints()
+	inCombatText:SetPoint("CENTER", status, "CENTER", 0, sp / 2)
+	outCombatText:ClearAllPoints()
+	outCombatText:SetPoint("CENTER", status, "CENTER", 0, -sp / 2)
 end
 
 status:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -67,92 +69,96 @@ local outCombatTimer
 fadeToggle = true
 
 status:SetScript("OnEvent", function(self, event)
-  if event == "PLAYER_LOGIN" then
-    statusDB = statusDB or {
-      enabled = true,
-      x = 0,
-      y = 0,
-      combatStatusLocked = true,
-      font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
-      size = 14,
-      fadeToggle = true
-    }
+	if event == "PLAYER_LOGIN" then
+		statusDB = statusDB
+			or {
+				enabled = true,
+				x = 0,
+				y = 0,
+				combatStatusLocked = true,
+				font = "Interface\\AddOns\\CTS\\Media\\fonts\\Expressway.ttf",
+				size = 14,
+				fadeToggle = true,
+			}
 
-    fadeToggle = statusDB.fadeToggle -- Makes the FadeToggle persist
+		fadeToggle = statusDB.fadeToggle -- Makes the FadeToggle persist
 
-    status:ClearAllPoints()
-    status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
-    CTS_UpdateStatusFont()
-    local LEM = LibStub('LibEditMode')
+		status:ClearAllPoints()
+		status:SetPoint("CENTER", UIParent, "CENTER", statusDB.x, statusDB.y)
+		CTS_UpdateStatusFont()
+		local LEM = LibStub("LibEditMode")
 
-    if LEM then
-      local function onPositionChanged(frame, layoutName, point, x, y)
-        if not statusDB.layouts then
-          statusDB.layouts = {}
-        end
-        if not statusDB.layouts[layoutName] then
-          statusDB.layouts[layoutName] = {}
-        end
+		if LEM then
+			local function onPositionChanged(frame, layoutName, point, x, y)
+				if not statusDB.layouts then
+					statusDB.layouts = {}
+				end
+				if not statusDB.layouts[layoutName] then
+					statusDB.layouts[layoutName] = {}
+				end
 
-        statusDB.layouts[layoutName].point = point
-        statusDB.layouts[layoutName].x = x
-        statusDB.layouts[layoutName].y = y
-      end
+				statusDB.layouts[layoutName].point = point
+				statusDB.layouts[layoutName].x = x
+				statusDB.layouts[layoutName].y = y
+			end
 
-      local defaultPosition = {
-        point = 'CENTER',
-        x = 0,
-        y = 0,
-      }
+			local defaultPosition = {
+				point = "CENTER",
+				x = 0,
+				y = 0,
+			}
 
-      LEM:RegisterCallback('layout', function(layoutName)
-        if not statusDB.layouts then
-          statusDB.layouts = {}
-        end
-        if not statusDB.layouts[layoutName] then
-          statusDB.layouts[layoutName] = {point = "CENTER", x = 0, y = 0}
-        end
+			LEM:RegisterCallback("layout", function(layoutName)
+				if not statusDB.layouts then
+					statusDB.layouts = {}
+				end
+				if not statusDB.layouts[layoutName] then
+					statusDB.layouts[layoutName] = { point = "CENTER", x = 0, y = 0 }
+				end
 
-        status:ClearAllPoints()
-        status:SetPoint(
-          statusDB.layouts[layoutName].point or "CENTER",
-          UIParent,
-          statusDB.layouts[layoutName].point or "CENTER",
-          statusDB.layouts[layoutName].x or 0,
-          statusDB.layouts[layoutName].y or 0)
-        end)
-        LEM:AddFrame(status, onPositionChanged, defaultPosition)
-      end
-
-    elseif event == "PLAYER_REGEN_DISABLED" then
-      if fadeToggle == true then
-        outCombatText:Hide()
-        fade(inCombatText)
-      else
-        outCombatText:Hide()
-        inCombatText:SetAlpha(1)
-        if inCombatTimer then
-          inCombatTimer:Cancel()
-        end
-        inCombatText:Show()
-        inCombatTimer = C_Timer.NewTimer(3, function()
-          inCombatText:Hide()
-        end)
-      end
-    elseif event == "PLAYER_REGEN_ENABLED" then
-      if fadeToggle == true then
-        inCombatText:Hide()
-        fade(outCombatText)
-      else
-        inCombatText:Hide()
-        outCombatText:SetAlpha(1)
-        if outCombatTimer then
-          outCombatTimer:Cancel()
-        end
-        outCombatText:Show()
-        outCombatTimer = C_Timer.NewTimer(3, function()
-          outCombatText:Hide()
-        end)
-      end
-    end
-  end)
+				status:ClearAllPoints()
+				status:SetPoint(
+					statusDB.layouts[layoutName].point or "CENTER",
+					UIParent,
+					statusDB.layouts[layoutName].point or "CENTER",
+					statusDB.layouts[layoutName].x or 0,
+					statusDB.layouts[layoutName].y or 0
+				)
+			end)
+			LEM:AddFrame(status, onPositionChanged, defaultPosition)
+		end
+	elseif event == "PLAYER_REGEN_DISABLED" then
+		if statusDB.oocOnly == true then
+			return
+		end
+		if fadeToggle == true then
+			outCombatText:Hide()
+			fade(inCombatText)
+		else
+			outCombatText:Hide()
+			inCombatText:SetAlpha(1)
+			if inCombatTimer then
+				inCombatTimer:Cancel()
+			end
+			inCombatText:Show()
+			inCombatTimer = C_Timer.NewTimer(3, function()
+				inCombatText:Hide()
+			end)
+		end
+	elseif event == "PLAYER_REGEN_ENABLED" then
+		if fadeToggle == true then
+			inCombatText:Hide()
+			fade(outCombatText)
+		else
+			inCombatText:Hide()
+			outCombatText:SetAlpha(1)
+			if outCombatTimer then
+				outCombatTimer:Cancel()
+			end
+			outCombatText:Show()
+			outCombatTimer = C_Timer.NewTimer(3, function()
+				outCombatText:Hide()
+			end)
+		end
+	end
+end)

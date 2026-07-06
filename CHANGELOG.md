@@ -1,3 +1,10 @@
+## 1.9.5 - 2026-07-06
+
+### Added
+- Added a toggle to only show the 'Out of Combat' text
+
+---
+
 ## [1.9.4] - 2026-06-27
 
 ### Changed
