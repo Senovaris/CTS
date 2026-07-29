@@ -1,4 +1,11 @@
-## 1.9.5 - 2026-07-06
+## [1.9.6] - 2026-07-29
+
+### Added
+- Support for patch 12.1.0
+
+---
+
+## [1.9.5] - 2026-07-06
 
 ### Added
 - Added a toggle to only show the 'Out of Combat' text
