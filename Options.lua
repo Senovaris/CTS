@@ -1,4 +1,5 @@
 local ADDON_NAME, namespace = ...
+local L = namespace.L
 local kFTS = namespace.localeFont
 
 AursUI.SetTheme(1, 0.4, 0)
@@ -30,16 +31,16 @@ end
 
 -- Pre stuff loaded
 
-local panel = AursUI.CreatePanel(340, 400, "CTS Options")
+local panel = AursUI.CreatePanel(340, 400, L["CTS Options"])
 
-local tabs, UpdateTabs = AursUI.CreateTabs(panel, { "Combat Timer", "Combat Status" })
+local tabs, UpdateTabs = AursUI.CreateTabs(panel, { L["Combat Timer"], L["Combat Status"] })
 
 local L1 = AursUI.NewLayout(tabs[1].content, 16, -10)
 
 local eCT = L1:Row({
 	{
 		type = "check",
-		label = "Enable Combat Timer",
+		label = L["Enable Combat Timer"],
 		getValue = function()
 			return timerDB.enabled
 		end,
@@ -54,7 +55,7 @@ local eCT = L1:Row({
 	},
 	{
 		type = "button",
-		label = "Show / Hide",
+		label = L["Show / Hide"],
 		onClick = function()
 			if timerText:IsShown() then
 				timerText:Hide()
@@ -71,7 +72,7 @@ L1:Space(12)
 L1:Separator()
 L1:Space(22)
 
-tSS = L1:Slider("Font Size", 8, 60, function()
+tSS = L1:Slider(L["Font Size"], 8, 60, function()
 	return timerDB.size
 end, function(val)
 	timerDB.size = val
@@ -90,6 +91,11 @@ end, function(val)
 	end
 end, 220)
 
+if kFTS then
+	tFD:SetAlpha(0.4)
+	tFD:EnableMouse(false)
+end
+
 local L2 = AursUI.NewLayout(tabs[2].content, 16, -10)
 
 local showStatusText = false
@@ -97,7 +103,7 @@ local showStatusText = false
 local eCS = L2:Row({
 	{
 		type = "check",
-		label = "Enable Combat Status",
+		label = L["Enable Combat Status"],
 		getValue = function()
 			return statusDB.enabled
 		end,
@@ -112,7 +118,7 @@ local eCS = L2:Row({
 	},
 	{
 		type = "button",
-		label = "Show / Hide",
+		label = L["Show / Hide"],
 		onClick = function()
 			status:SetScript("OnUpdate", nil)
 			if not showStatusText then
@@ -131,7 +137,7 @@ local eCS = L2:Row({
 	},
 })
 
-tFT = L2:Check("Toggle Fade Animation", function()
+tFT = L2:Check(L["Toggle Fade Animation"], function()
 	return statusDB.fadeToggle
 end, function(val)
 	statusDB.fadeToggle = val
@@ -141,7 +147,7 @@ end)
 L2:Separator()
 L2:Space(22)
 
-cSS = L2:Slider("Combat text size", 8, 60, function()
+cSS = L2:Slider(L["Combat text size"], 8, 60, function()
 	return statusDB.size
 end, function(val)
 	statusDB.size = val
@@ -170,7 +176,7 @@ end
 L2:Separator()
 L2:Space(5)
 
-local eOOC = L2:Check("Enable Only Out of Combat text", function()
+local eOOC = L2:Check(L["Enable Only Out of Combat text"], function()
 	return statusDB.oocOnly
 end, function(val)
 	statusDB.oocOnly = val

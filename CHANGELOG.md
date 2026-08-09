@@ -1,3 +1,8 @@
+## [1.9.7] - 2026-08-09
+
+### Added
+- Localization for the option panel for Korean, Trad Chinese, Simplified Chinese and Russian.
+
 ## [1.9.6] - 2026-07-29
 
 ### Added
