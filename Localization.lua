@@ -11,7 +11,7 @@ local L = setmetatable({}, {
 namespace.L = L
 
 local LOCALE = GetLocale()
--- local LOCALE = "zhTW" -- force locale for testing
+-- local LOCALE = "frFR" -- force locale for testing
 
 if LOCALE == "enUS" then
 	-- English is the default, no translations needed
@@ -21,24 +21,64 @@ end
 if LOCALE == "deDE" then
 	L["In Combat"] = "Im Kampf"
 	L["Out of Combat"] = "Außerhalb des Kampfes"
+	L["CTS Options"] = "CTS Optionen"
+	L["Combat Timer"] = "Kampf-Timer"
+	L["Combat Status"] = "Kampfstatus"
+	L["Show / Hide"] = "Sichtbarkeit"
+	L["Enable Combat Timer"] = "Kampf-Timer aktivieren"
+	L["Font Size"] = "Schriftgröße"
+	L["Enable Combat Status"] = "Kampfstatus aktivieren"
+	L["Toggle Fade Animation"] = "Fade-Animation umschalten"
+	L["Combat text size"] = "Größe des Kampftexts"
+	L["Enable Only Out of Combat text"] = "Text nur außerhalb des Kampfes anzeigen"
 	return
 end
 
 if LOCALE == "frFR" then
 	L["In Combat"] = "En combat"
 	L["Out of Combat"] = "Hors combat"
+	L["CTS Options"] = "Options de CTS"
+	L["Combat Timer"] = "Minuteur de combat"
+	L["Combat Status"] = "État du combat"
+	L["Show / Hide"] = "Visibilité"
+	L["Enable Combat Timer"] = "Activer le minuteur"
+	L["Font Size"] = "Taille de police"
+	L["Enable Combat Status"] = "Activer l'état du combat"
+	L["Toggle Fade Animation"] = "Activer/désactiver l'animation"
+	L["Combat text size"] = "Taille du texte de combat"
+	L["Enable Only Out of Combat text"] = "Afficher le texte uniquement hors combat"
 	return
 end
 
 if LOCALE == "esES" or LOCALE == "esMX" then
 	L["In Combat"] = "En combate"
 	L["Out of Combat"] = "Fuera de combate"
+	L["CTS Options"] = "Opciones de CTS"
+	L["Combat Timer"] = "Temporizador de combate"
+	L["Combat Status"] = "Estado de combate"
+	L["Show / Hide"] = "Visibilidad"
+	L["Enable Combat Timer"] = "Activar temporizador"
+	L["Font Size"] = "Tamaño de fuente"
+	L["Enable Combat Status"] = "Activar estado"
+	L["Toggle Fade Animation"] = "Activar/desactivar la animación"
+	L["Combat text size"] = "Tamaño del texto de combate"
+	L["Enable Only Out of Combat text"] = "Mostrar texto solo fuera de combate"
 	return
 end
 
 if LOCALE == "ptBR" then
 	L["In Combat"] = "Em Combate"
 	L["Out of Combat"] = "Fora de Combate"
+	L["CTS Options"] = "Opções do CTS"
+	L["Combat Timer"] = "Temporizador de Combate"
+	L["Combat Status"] = "Status de Combate"
+	L["Show / Hide"] = "Visibilidade"
+	L["Enable Combat Timer"] = "Ativar temporizador"
+	L["Font Size"] = "Tamanho da Fonte"
+	L["Enable Combat Status"] = "Ativar status"
+	L["Toggle Fade Animation"] = "Alternar Animação"
+	L["Combat text size"] = "Tamanho do Texto de Combate"
+	L["Enable Only Out of Combat text"] = "Mostrar texto apenas fora de combate"
 	return
 end
 
