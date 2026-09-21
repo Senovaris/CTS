@@ -34,8 +34,6 @@ status:SetBackdropBorderColor(0, 0, 0, 0)
 local inCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 CTS.inCombatText = inCombatText
 inCombatText:SetPoint("CENTER", status, "CENTER", 0, 10)
-local font, size = inCombatText:GetFont()
--- inCombatText:SetFont(font, size, "OUTLINE, THIN") -- Not Needed but kept in for safety
 inCombatText:SetText(L["In Combat"])
 inCombatText:SetTextColor(1, 0, 0, 1)
 inCombatText:Hide()
@@ -43,8 +41,6 @@ inCombatText:Hide()
 local outCombatText = status:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 CTS.outCombatText = outCombatText
 outCombatText:SetPoint("CENTER", status, "CENTER", 0, -10)
-local font2, size2 = outCombatText:GetFont()
--- outCombatText:SetFont(font2, size2, "OUTLINE, THIN") -- Not Needed but kept in for safety
 outCombatText:SetText(L["Out of Combat"])
 outCombatText:SetTextColor(0, 1, 0, 1)
 outCombatText:Hide()
@@ -68,7 +64,7 @@ local inCombatTimer
 local outCombatTimer
 fadeToggle = true
 
-status:SetScript("OnEvent", function(self, event)
+status:SetScript("OnEvent", function(_, event)
 	if event == "PLAYER_LOGIN" then
 		statusDB = statusDB
 			or {
@@ -90,6 +86,8 @@ status:SetScript("OnEvent", function(self, event)
 
 		if LEM then
 			local function onPositionChanged(frame, layoutName, point, x, y)
+				layoutName = layoutName or "Default"
+
 				if not statusDB.layouts then
 					statusDB.layouts = {}
 				end
@@ -109,6 +107,10 @@ status:SetScript("OnEvent", function(self, event)
 			}
 
 			LEM:RegisterCallback("layout", function(layoutName)
+				if not layoutName then
+					return
+				end
+
 				if not statusDB.layouts then
 					statusDB.layouts = {}
 				end

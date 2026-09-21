@@ -1,3 +1,13 @@
+## [1.9.9] - 2026-09-XX
+
+### Added 
+- Nil-guards for LibEditMode layouts for 12.1.5 and WoW:Forever
+
+### Removed
+- Old code that have been redundant for a long time but just been ignored.
+
+---
+
 ## [1.9.8] - 2026-08-10
 
 ### Added

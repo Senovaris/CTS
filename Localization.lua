@@ -11,10 +11,10 @@ local L = setmetatable({}, {
 namespace.L = L
 
 local LOCALE = GetLocale()
+
 -- local LOCALE = "frFR" -- force locale for testing
 
 if LOCALE == "enUS" then
-	-- English is the default, no translations needed
 	return
 end
 
